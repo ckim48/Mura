@@ -7,6 +7,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <style>
 :root{
   --ink:#0b0b0f;    
@@ -40,18 +44,30 @@ body{
   min-height:100vh; display:grid; place-items:center;
   position:relative; text-align:center; padding:0 6vw; overflow:hidden;
 }
-.hero:before{
-  content:""; position:absolute; inset:0;
-  background:
-    linear-gradient(180deg,#06070b99 0%,#06070bcc 60%,#06070be0 100%),
-    url("assets/hero.jpg") center/cover no-repeat;
-  filter:saturate(.9);
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(.9);
+  z-index: -2;
 }
+
+/* Dark gradient overlay */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,#06070b99 0%,#06070bcc 60%,#06070be0 100%);
+  z-index: -1;
+}
+
 .hero>*{position:relative}
 .kicker{letter-spacing:.12em; text-transform:uppercase; opacity:.8; font-size:13px}
-.h1{margin:.3rem 0; font-size:clamp(42px,8vw,88px); line-height:1.06; font-weight:800}
+.h1{margin:.3rem 0; font-size:clamp(38px,7vw,80px); line-height:1.06; font-weight:800}
 .h1 .dot{color:var(--acc)}
-.lead{font-size:clamp(16px,2.6vw,22px); opacity:.95; max-width:950px; margin:14px auto 4px}
+.lead{font-size:clamp(15px,2.4vw,20px); opacity:.95; max-width:950px; margin:14px auto 4px}
 .btn{
   display:inline-block; margin-top:22px; padding:14px 28px; border-radius:999px;
   background:var(--acc); color:#fff; font-weight:600; text-decoration:none;
@@ -244,6 +260,8 @@ body{
 }
 
 .step-media {
+  width: 80%;
+  margin: 10px auto;
   border-radius: 24px;
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(0,0,0,0.6),
@@ -348,6 +366,53 @@ body{
   .footer-inner{font-size:13px}
 }
 
+.about-media .tall-fix{
+  width: 100%;
+  max-height: clamp(260px, 46vh, 520px);
+  object-fit: cover;                   
+  object-position: center;          
+  display: block;
+  border-radius: 18px;
+  box-shadow: 0 12px 40px rgba(0,0,0,.35);
+}
+/* Hero base */
+.hero{
+  min-height:100vh; display:grid; place-items:center;
+  position:relative; text-align:center; padding:0 6vw; overflow:hidden;
+  z-index:0; /* create stacking context */
+}
+
+/* Background video */
+.hero-video{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit:cover; object-position:center;
+  filter:saturate(.9);
+  pointer-events:none;           
+  z-index:0;                    
+}
+
+.hero::before{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(180deg,#06070b99 0%,#06070bcc 60%,#06070be0 100%);
+  z-index:1;
+}
+
+.hero > *:not(video){
+  position:relative;
+  z-index:2;
+}
+.about-list{
+  margin:12px 0 0;
+  color:#d9d9d9;
+  line-height:1.7;
+  padding-left:1.1em;
+}
+.about-list li{
+  margin:4px 0;
+  list-style:disc;
+  opacity:.95;
+}
 
 </style>
 </head>
@@ -364,56 +429,81 @@ body{
 
 <!-- Hero -->
 <section class="hero" aria-label="Mura VR hero">
-  <div>
-    <div class="kicker">VR Emotional Support Platform</div>
-    <h1 class="h1">Project <span class="dot">Mura.</span></h1>
-    <p class="lead">
-      A VR platform for nonverbal expression, reflective healing, and personalized emotional care—designed
-      for accessible self-awareness and private, stigma-free support.
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="assets/last2.mp4" type="video/mp4">
+  </video>
+
+  <!-- Apply AOS only to text container -->
+  <div data-aos="fade-up" data-aos-delay="200">
+    <div class="kicker" data-aos="fade-up" data-aos-delay="300">VR Emotional Support Platform</div>
+    <h1 class="h1" data-aos="fade-up" data-aos-delay="400">Project <span class="dot">Mura.</span></h1>
+    <p class="lead" data-aos="fade-up" data-aos-delay="500">
+      A VR platform for nonverbal expression, reflective healing, and personalized emotional care —
+      designed for accessible self-awareness and private, stigma-free support.
     </p>
-    <a class="btn" href="#learn">Learn More</a>
+    <a class="btn" href="#learn" data-aos="zoom-in" data-aos-delay="650">Learn More</a>
   </div>
 
 </section>
+
+
 
 <!-- ===== About Section ===== -->
 <section id="about" class="about section">
   <!-- Row 1: text | image -->
   <div class="about-row">
-    <div class="about-text">
-      <p class="kicker lined">ABOUT</p>
-      <h2 class="about-title">Project Mura</h2>
-      <p>
+    <div class="about-text" data-aos="fade-right" data-aos-delay="100">
+      <p class="kicker lined" data-aos="fade-right" data-aos-delay="150">ABOUT</p>
+      <h2 class="about-title" data-aos="fade-right" data-aos-delay="200">Project Mura</h2>
+      <p data-aos="fade-right" data-aos-delay="260">
         A VR platform for nonverbal expression, reflective healing, and personalized emotional care.
         It helps users move from internal emotion recognition to guided engagement in a responsive,
-        stigma-free environment.
+        stigma-free environment. Built for accessibility, it runs smoothly on common headsets and
+        supports session logging for later reflection.
       </p>
+      <ul class="about-list" data-aos="fade-right" data-aos-delay="320">
+        <li>Nonverbal sketch/gesture capture with gentle haptics</li>
+        <li>Emotion-aware lighting and soundscapes</li>
+        <li>Guided prompts or open exploration modes</li>
+        <li>Session bookmarks and optional replays</li>
+      </ul>
     </div>
-    <div class="about-media">
-      <img src="assets/sample1.jpg" alt="Immersive VR environment preview">
+
+    <div class="about-media d-block mx-auto" data-aos="fade-left" data-aos-delay="200" style="width:80%;">
+      <img class="" src="assets/about.png" alt="Immersive VR environment preview">
     </div>
   </div>
 
+  <!-- Row 2: image | text -->
   <div class="about-row rev">
-    <div class="about-media">
-      <img src="assets/sample2.jpg" alt="Emotion-adaptive scene">
+    <div class="about-media" data-aos="fade-right" data-aos-delay="200">
+      <img class="tall-fix" src="assets/demo2.jpg" alt="Emotion-adaptive scene">
     </div>
-    <div class="about-text">
-      <p class="kicker lined">ABOUT</p>
-      <h2 class="about-title">Why It Matters</h2>
-      <p>
+
+    <div class="about-text" data-aos="fade-left" data-aos-delay="100">
+      <p class="kicker lined" data-aos="fade-left" data-aos-delay="150">ABOUT</p>
+      <h2 class="about-title" data-aos="fade-left" data-aos-delay="200">Why It Matters</h2>
+      <p data-aos="fade-left" data-aos-delay="260">
         Designed for schools and wellness programs, Mura supports emotional literacy and private
         reflection through calm spaces, guided meditations, and an optional companion mode for
-        supportive AI dialogue.
+        supportive AI dialogue. It respects privacy with local-first sessions and consent-based,
+        minimal data export options.
       </p>
+      <ul class="about-list" data-aos="fade-left" data-aos-delay="320">
+        <li>Classroom-friendly setup in minutes</li>
+        <li>Age-appropriate scenes and narration</li>
+        <li>Quiet mode tailored for counseling offices</li>
+        <li>Admin insights to track usage trends (opt-in)</li>
+      </ul>
     </div>
   </div>
 </section>
 
+
 <!-- ===== Features ===== -->
 <!-- ===== Features ===== -->
 <section id="features" class="section features">
-  <div class="section-head">
+  <div class="section-head" data-aos="fade-up" data-aos-delay="0">
     <p class="kicker">FEATURES</p>
     <h2 class="section-title">Three Modes, One Journey</h2>
     <p class="section-sub">Mura offers three distinct paths for emotional healing — Stillness, Meditation, and Companion — allowing users to explore in their own way, at their own pace.</p>
@@ -421,12 +511,12 @@ body{
 
   <!-- Feature 1 -->
   <div class="feature-row">
-    <div class="shot">
+    <div class="shot" data-aos="fade-right" data-aos-delay="50">
       <div class="device">
-        <img src="assets/sample1.jpg" alt="Stillness Mode screen">
+        <img src="assets/stillmode.gif" alt="Stillness Mode screen">
       </div>
     </div>
-    <div class="copy">
+    <div class="copy" data-aos="fade-left" data-aos-delay="150">
       <h3 class="feature-title"><span class="num">01</span> Stillness Mode</h3>
       <p class="muted">
         Enter a quiet, ambient environment designed for reflection and calm.  
@@ -440,13 +530,13 @@ body{
 
   <!-- Feature 2 (reversed) -->
   <div class="feature-row rev">
-    <div class="shot">
+    <div class="shot" data-aos="fade-left" data-aos-delay="50">
       <div class="device">
-        <img src="assets/sample1.jpg" alt="Guided Meditation screen">
+        <img src="assets/theraphic.gif" alt="Guided Meditation screen">
       </div>
     </div>
-    <div class="copy">
-      <h3 class="feature-title"><span class="num">02</span> Meditation Mode</h3>
+    <div class="copy" data-aos="fade-right" data-aos-delay="150">
+      <h3 class="feature-title"><span class="num">02</span> Theraphic Mode</h3>
       <p class="muted">
         Guided meditation sessions blend soothing narration, soundscapes, and visuals.  
         Each experience adapts to your emotional check-in, helping you find balance and clarity.
@@ -459,12 +549,12 @@ body{
 
   <!-- Feature 3 -->
   <div class="feature-row">
-    <div class="shot">
+    <div class="shot" data-aos="fade-right" data-aos-delay="50">
       <div class="device">
-        <img src="assets/sample1.jpg" alt="Companion Mode screen">
+        <img src="assets/comp.gif" alt="Companion Mode screen">
       </div>
     </div>
-    <div class="copy">
+    <div class="copy" data-aos="fade-left" data-aos-delay="150">
       <h3 class="feature-title"><span class="num">03</span> Companion Mode</h3>
       <p class="muted">
         A conversational AI companion listens, reflects, and responds with empathy.  
@@ -475,78 +565,68 @@ body{
       </div>
     </div>
   </div>
+
 </section>
 
 <!-- ===== How It Works (Journey Timeline Layout) ===== -->
 <section id="how" class="section how-journey">
-  <div class="section-head text-center">
-    <p class="kicker lined">HOW IT WORKS</p>
+  <div class="section-head text-center" data-aos="fade-up" data-aos-delay="0">
+    <p class="kicker">HOW IT WORKS</p>
     <h2 class="section-title">Your Journey with Mura</h2>
     <p class="section-sub">From the first emotional check-in to reflective closure — each stage unfolds naturally, guiding you through self-awareness and calm.</p>
   </div>
 
   <div class="timeline">
     <!-- Step 1 -->
-    <div class="step-block">
+    <div class="step-block" data-aos="fade-up" data-aos-delay="50">
       <div class="step-num">01</div>
-      <div class="step-media">
-        <img src="assets/sample1.jpg" alt="Step 1 - Check-in">
+      <div class="step-media" data-aos="zoom-in" data-aos-delay="120">
+        <img src="assets/s1.gif" alt="Step 1 - Check-in">
       </div>
-      <div class="step-content">
+      <div class="step-content" data-aos="fade-up" data-aos-delay="180">
         <h3>Emotional Check-In</h3>
         <p>Begin by identifying your current feeling or intention. This moment of awareness sets the emotional tone for your experience.</p>
       </div>
     </div>
 
     <!-- Step 2 -->
-    <div class="step-block">
+    <div class="step-block" data-aos="fade-up" data-aos-delay="120">
       <div class="step-num">02</div>
-      <div class="step-media">
-        <img src="assets/sample1.jpg" alt="Step 2 - Mode selection">
+      <div class="step-media" data-aos="zoom-in" data-aos-delay="180">
+        <img src="assets/s2.gif" alt="Step 2 - Mode selection">
       </div>
-      <div class="step-content">
+      <div class="step-content" data-aos="fade-up" data-aos-delay="240">
         <h3>Select Your Mode</h3>
         <p>Choose <strong>Stillness</strong>, <strong>Meditation</strong>, or <strong>Companion</strong> mode — each tailored to your comfort and emotional needs.</p>
       </div>
     </div>
 
     <!-- Step 3 -->
-    <div class="step-block">
+    <div class="step-block" data-aos="fade-up" data-aos-delay="190">
       <div class="step-num">03</div>
-      <div class="step-media">
-        <img src="assets/sample1.jpg" alt="Step 3 - Immersive environment">
+      <div class="step-media" data-aos="zoom-in" data-aos-delay="250">
+        <img src="assets/play.gif" alt="Step 3 - Immersive environment">
       </div>
-      <div class="step-content">
+      <div class="step-content" data-aos="fade-up" data-aos-delay="310">
         <h3>Immerse in the Space</h3>
         <p>Enter a responsive VR environment that mirrors your emotions with sound, light, and gentle ambient motion.</p>
       </div>
     </div>
 
     <!-- Step 4 -->
-    <div class="step-block">
+    <div class="step-block" data-aos="fade-up" data-aos-delay="260">
       <div class="step-num">04</div>
-      <div class="step-media">
-        <img src="assets/sample1.jpg" alt="Step 4 - Interaction">
+      <div class="step-media" data-aos="zoom-in" data-aos-delay="320">
+        <img src="assets/theraphic.gif" alt="Step 4 - Interaction">
       </div>
-      <div class="step-content">
+      <div class="step-content" data-aos="fade-up" data-aos-delay="380">
         <h3>Engage & Reflect</h3>
         <p>Practice mindfulness or talk with the AI companion. Every action deepens your emotional clarity and understanding.</p>
       </div>
     </div>
-
-    <!-- Step 5 -->
-    <div class="step-block">
-      <div class="step-num">05</div>
-      <div class="step-media">
-        <img src="assets/sample1.jpg" alt="Step 5 - Save moment">
-      </div>
-      <div class="step-content">
-        <h3>Save Your Moment</h3>
-        <p>Conclude with a reflection or simply take your calm with you. Mura saves your journey, ready for your next session.</p>
-      </div>
-    </div>
   </div>
 </section>
+
 
 <!-- ===== Contact ===== -->
 <section id="contact" class="section contact">
@@ -572,7 +652,15 @@ body{
   // set current year in footer
   document.getElementById('year').textContent = new Date().getFullYear();
 </script>
-
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 800,      
+    easing: 'ease-out', 
+    once: true,       
+    offset: 80          
+  });
+</script>
 
 </body>
 </html>
