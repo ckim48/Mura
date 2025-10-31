@@ -39,40 +39,6 @@ body{
 .brand{font-weight:800; letter-spacing:.3px; font-size:28px}
 .nav .sp{flex:1}
 
-/* ===== Hero */
-.hero{
-  min-height:100vh; display:grid; place-items:center;
-  position:relative; text-align:center; padding:0 6vw; overflow:hidden;
-}
-.hero-video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: saturate(.9);
-  z-index: -2;
-}
-
-/* Dark gradient overlay */
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg,#06070b99 0%,#06070bcc 60%,#06070be0 100%);
-  z-index: -1;
-}
-
-.hero>*{position:relative}
-.kicker{letter-spacing:.12em; text-transform:uppercase; opacity:.8; font-size:13px}
-.h1{margin:.3rem 0; font-size:clamp(38px,7vw,80px); line-height:1.06; font-weight:800}
-.h1 .dot{color:var(--acc)}
-.lead{font-size:clamp(15px,2.4vw,20px); opacity:.95; max-width:950px; margin:14px auto 4px}
-.btn{
-  display:inline-block; margin-top:22px; padding:14px 28px; border-radius:999px;
-  background:var(--acc); color:#fff; font-weight:600; text-decoration:none;
-  box-shadow:0 10px 28px #6c63ff55;
-}
 
 /* ===== Sections (shared) */
 .section{padding:80px 6vw}
@@ -375,33 +341,7 @@ body{
   border-radius: 18px;
   box-shadow: 0 12px 40px rgba(0,0,0,.35);
 }
-/* Hero base */
-.hero{
-  min-height:100vh; display:grid; place-items:center;
-  position:relative; text-align:center; padding:0 6vw; overflow:hidden;
-  z-index:0; /* create stacking context */
-}
 
-/* Background video */
-.hero-video{
-  position:absolute; inset:0;
-  width:100%; height:100%;
-  object-fit:cover; object-position:center;
-  filter:saturate(.9);
-  pointer-events:none;           
-  z-index:0;                    
-}
-
-.hero::before{
-  content:""; position:absolute; inset:0;
-  background:linear-gradient(180deg,#06070b99 0%,#06070bcc 60%,#06070be0 100%);
-  z-index:1;
-}
-
-.hero > *:not(video){
-  position:relative;
-  z-index:2;
-}
 .about-list{
   margin:12px 0 0;
   color:#d9d9d9;
@@ -413,7 +353,86 @@ body{
   list-style:disc;
   opacity:.95;
 }
+.hero{
+  min-height:92vh;
+  display:grid;
+  align-items:center;
+  position:relative;
+  padding:0 6vw;
+  overflow:hidden;
+  background: radial-gradient(ellipse at top, #0a0b14 0%, #06070b 100%);
+  text-align:left;
+}
 
+/* Background video not used; kept for compat */
+.hero-video{ display:none !important; }
+.hero::before{ display:none !important; }
+
+/* Stronger animation presence */
+.net-canvas{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  z-index:0 !important;
+  opacity:.78;                 /* was .55 */
+  pointer-events:none;
+}
+
+/* Content grid (on top) */
+.hero-grid{
+  position:relative; z-index:2;
+  display:grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap:48px;
+  width:100%;
+  max-width:1200px;
+  margin:0 auto;
+  padding-top: clamp(84px, 13vh, 172px);
+  padding-bottom: clamp(24px, 6vh, 84px);
+}
+
+/* Copy & buttons */
+.kicker{letter-spacing:.12em; text-transform:uppercase; opacity:.85; font-size:13px}
+.h1{margin:.9rem 0; font-size:clamp(38px,7vw,80px); line-height:1.06; font-weight:800}
+.h1 .dot{color:var(--acc)}
+.lead{font-size:clamp(16px,2.4vw,21px); opacity:.97; max-width:56ch; margin:14px 0 0}
+.hero-actions{display:flex; gap:12px; flex-wrap:wrap; margin-top:22px}
+.btn{
+  display:inline-block; padding:14px 24px; border-radius:999px;
+  background:var(--acc); color:#fff; font-weight:600; text-decoration:none;
+  box-shadow:0 12px 34px rgba(108,99,255,.45);
+}
+.btn.alt{
+  background:#1f1f28; box-shadow:none; border:1px solid rgba(255,255,255,.12);
+}
+
+/* Device frame */
+.hero-media .device{
+  position:relative; border-radius:28px; padding:14px;
+  background: linear-gradient(145deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+  box-shadow: 0 22px 60px rgba(0,0,0,.6), inset 0 0 0 1px rgba(255,255,255,.08);
+}
+.hero-media .device:before{
+  content:""; position:absolute; left:50%; top:8px; transform:translateX(-50%);
+  width:22%; height:6px; border-radius:6px; background:rgba(255,255,255,.2);
+}
+.hero-media img, .hero-media video{
+  display:block; width:100%; height:auto; border-radius:20px; object-fit:cover;
+  box-shadow:0 10px 26px rgba(0,0,0,.5);
+}
+
+/* Responsive */
+@media (max-width:980px){
+  .hero{min-height:auto}
+  .hero-grid{grid-template-columns:1fr; gap:28px; padding-top:100px; padding-bottom:52px}
+  .hero-copy{order:1; text-align:center}
+  .hero-actions{justify-content:center}
+  .hero-media{order:2}
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .net-canvas{ display:none; }
+}
 </style>
 </head>
 <body>
@@ -427,25 +446,316 @@ body{
   <a class="hide-sm" href="#features">Features</a>
 </nav>
 
-<!-- Hero -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Mura · VR Emotional Care</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+
+<style>
+:root{
+  --ink:#0b0b0f;
+  --fg:#ffffff;
+  --acc:#6c63ff;  /* primary accent, animation uses this as one end of gradient */
+}
+
+/* Base */
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  color:var(--fg);
+  background:#000;
+}
+
+/* Top Nav */
+.nav{
+  position:fixed; inset:0 0 auto;
+  display:flex; gap:28px; align-items:center;
+  padding:20px 40px; z-index:10;
+  backdrop-filter:saturate(1.1) blur(6px);
+}
+.nav a{color:#fff; text-decoration:none; opacity:.92}
+.nav a:hover{opacity:1}
+.brand{font-weight:800; letter-spacing:.3px; font-size:28px}
+.nav .sp{flex:1}
+
+/* ===== HERO ===== */
+.hero{
+  min-height:92vh;
+  display:grid;
+  align-items:center;
+  position:relative;
+  padding:0 6vw;
+  overflow:hidden;
+  background: radial-gradient(ellipse at top, #0a0b14 0%, #06070b 100%);
+  text-align:left;
+}
+
+.hero-video{ display:none !important; }
+.hero::before{ display:none !important; }
+
+.net-canvas{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  z-index:0 !important;
+  opacity:.9;               
+  mix-blend-mode: screen;     
+  filter:contrast(115%) saturate(115%);
+  pointer-events:none;
+}
+.hero-grid{
+  position:relative; z-index:2;
+  display:grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap:48px;
+  width:100%;
+  max-width:1200px;
+  margin:0 auto;
+  padding-top: clamp(84px, 13vh, 172px);
+  padding-bottom: clamp(24px, 6vh, 84px);
+}
+
+/* Copy & buttons */
+.kicker{letter-spacing:.12em; text-transform:uppercase; opacity:.85; font-size:13px}
+.h1{margin:.9rem 0; font-size:clamp(38px,7vw,80px); line-height:1.06; font-weight:800}
+.h1 .dot{color:var(--acc)}
+.lead{font-size:clamp(16px,2.4vw,21px); opacity:.97; max-width:56ch; margin:14px 0 0}
+.hero-actions{display:flex; gap:12px; flex-wrap:wrap; margin-top:22px}
+.btn{
+  display:inline-block; padding:14px 24px; border-radius:999px;
+  background:var(--acc); color:#fff; font-weight:600; text-decoration:none;
+  box-shadow:0 12px 34px rgba(108,99,255,.45);
+}
+.btn.alt{
+  background:#1f1f28; box-shadow:none; border:1px solid rgba(255,255,255,.12);
+}
+
+/* Device frame */
+.hero-media .device{
+  position:relative; border-radius:28px; padding:14px;
+  background: linear-gradient(145deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+  box-shadow: 0 22px 60px rgba(0,0,0,.6), inset 0 0 0 1px rgba(255,255,255,.08);
+}
+.hero-media .device:before{
+  content:""; position:absolute; left:50%; top:8px; transform:translateX(-50%);
+  width:22%; height:4px; border-radius:6px; background:rgba(255,255,255,.2);
+}
+.hero-media img, .hero-media video{
+  display:block; width:100%; height:auto; border-radius:20px; object-fit:cover;
+  box-shadow:0 10px 26px rgba(0,0,0,.5);
+}
+
+/* Responsive */
+@media (max-width:980px){
+  .hero{min-height:auto}
+  .hero-grid{grid-template-columns:1fr; gap:28px; padding-top:100px; padding-bottom:52px}
+  .hero-copy{order:1; text-align:center}
+  .hero-actions{justify-content:center}
+  .hero-media{order:2}
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .net-canvas{ display:none; }
+}
+@media (max-width: 980px){
+  .about-row,
+  .about-row.rev{ grid-template-columns: 1fr; }
+
+  /* Image first, centered */
+  .about-row .about-media{ 
+    order: 1; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    margin-inline: auto; 
+    width: 100%;
+  }
+
+  .about-row .about-media img{
+    max-width: min(560px, 92vw);
+  }
+
+  .about-row .about-text{
+    order: 2; 
+    text-align: center;
+  }
+
+  .about-row{ gap: 22px; margin: 36px 0; }
+}
+/* === MICA / Partners === */
+.partners{background:radial-gradient(ellipse at top,#0f1020 0%,#090a10 60%,#09090f 100%)}
+.logo-wrap{
+  display:grid;grid-template-columns:repeat(4,minmax(120px,1fr));
+  gap:18px;align-items:center;justify-items:center;max-width:980px;margin:28px auto 0
+}
+.logo-card{
+  width:100%;max-width:220px;aspect-ratio:3/1.1;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.03);
+  box-shadow:0 10px 28px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.06);
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+.logo-card:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.08)}
+.logo-card img{max-width:80%;max-height:60px;opacity:.95;filter:grayscale(10%)}
+
+/* Buttons row inside partners */
+.cta-row{display:flex;gap:12px;justify-content:center;margin-top:22px;flex-wrap:wrap}
+
+/* === Demo Modal (native <dialog>) === */
+dialog.modal-card{
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:16px; padding:0; max-width:560px; width:min(96vw,560px);
+  color:#fff; background:#0c0d14;
+  box-shadow:0 24px 60px rgba(2,6,23,.5), inset 0 0 0 1px rgba(255,255,255,.04);
+}
+dialog::backdrop{background:rgba(10,12,20,.55);backdrop-filter:blur(3px)}
+.modal-head,.modal-foot{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
+.modal-foot{border-top:1px solid rgba(255,255,255,.08);border-bottom:none;display:flex;justify-content:flex-end;gap:.5rem}
+.modal-body{padding:16px}
+.modal-title{margin:0;font-size:1.1rem;font-weight:700}
+.modal-close{background:transparent;border:none;color:#fff;opacity:.9;cursor:pointer}
+
+/* Form */
+.demo-form label{display:block;font-size:.9rem;opacity:.9;margin:.4rem 0 .25rem}
+.demo-form input,.demo-form textarea{
+  width:100%;border-radius:12px;border:1px solid rgba(255,255,255,.12);
+  background:#0f111a;color:#fff;padding:.8rem .9rem;outline:none
+}
+.demo-form input:focus,.demo-form textarea:focus{border-color:rgba(108,99,255,.6);box-shadow:0 0 0 3px rgba(108,99,255,.18)}
+.demo-form .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.demo-form textarea{min-height:110px;resize:vertical}
+
+/* Buttons */
+.btn-acc{background:var(--acc);color:#fff;border:none;border-radius:999px;padding:.8rem 1.1rem;font-weight:700;box-shadow:0 12px 34px rgba(108,99,255,.35);cursor:pointer}
+.btn-ghost{background:#1f1f28;border:1px solid rgba(255,255,255,.14);color:#fff;border-radius:999px;padding:.8rem 1.1rem;cursor:pointer}
+
+/* Success toast */
+.toast{
+  position:fixed;left:50%;bottom:24px;transform:translateX(-50%);
+  background:#0f111a;color:#fff;border:1px solid rgba(255,255,255,.12);
+  border-radius:12px;padding:.8rem 1rem;box-shadow:0 10px 30px rgba(0,0,0,.45);
+  display:none;z-index:1000;max-width:92vw;text-align:center
+}
+.toast .dot{color:var(--acc)}
+@media (min-width:768px){.toast{left:auto;right:24px;transform:none}}
+@media (max-width:900px){
+  .logo-wrap{grid-template-columns:repeat(2,minmax(120px,1fr))}
+}
+/* === MICA two-column layout === */
+.partners-grid{
+  display:grid;
+  grid-template-columns: .9fr 1.1fr; /* left logo | right copy */
+  gap:48px;
+  align-items:center;
+  max-width:1200px;
+  margin:0 auto;
+}
+
+.logo-col{
+  display:flex;
+  justify-content:center;
+}
+.logo-col .logo-card{
+  width:100%;
+  max-width:340px;               /* tune as needed */
+  aspect-ratio:3/1.2;
+}
+.logo-col .logo-card img{
+  max-width:90%;
+  max-height:80px;
+  object-fit:contain;
+  margin:auto;
+}
+
+.copy-col .section-head{
+  margin:0;                      /* align with grid */
+  text-align:left;               /* override global center */
+}
+.copy-col .section-sub{max-width:60ch}
+
+.copy-col .cta-row{
+  justify-content:flex-start;    /* button left-align */
+  margin-top:18px;
+}
+
+@media (max-width:980px){
+  .partners-grid{grid-template-columns:1fr; gap:28px}
+  .copy-col .section-head{text-align:center}
+  .copy-col .cta-row{justify-content:center}
+}
+.school-image {
+  width: 100%;
+  max-width: 520px;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+.school-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 18px;
+}
+
+/* Responsive */
+@media (max-width: 980px) {
+  .school-image {
+    max-width: min(560px, 92vw);
+    margin-inline: auto;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<!-- Top Nav -->
+<nav class="nav">
+  <a class="brand" href="#">Mura</a>
+  <span class="sp"></span>
+  <a class="hide-sm" href="#about">About</a>
+  <a class="hide-sm" href="#features">Features</a>
+</nav>
+
+<!-- HERO -->
 <section class="hero" aria-label="Mura VR hero">
-  <video class="hero-video" autoplay muted loop playsinline>
-    <source src="assets/last2.mp4" type="video/mp4">
-  </video>
+  <!-- More noticeable animated background -->
+  <canvas id="net-bg" class="net-canvas" aria-hidden="true"></canvas>
 
-  <!-- Apply AOS only to text container -->
-  <div data-aos="fade-up" data-aos-delay="200">
-    <div class="kicker" data-aos="fade-up" data-aos-delay="300">VR Emotional Support Platform</div>
-    <h1 class="h1" data-aos="fade-up" data-aos-delay="400">Project <span class="dot">Mura.</span></h1>
-    <p class="lead" data-aos="fade-up" data-aos-delay="500">
-      A VR platform for nonverbal expression, reflective healing, and personalized emotional care —
-      designed for accessible self-awareness and private, stigma-free support.
-    </p>
-    <a class="btn" href="#learn" data-aos="zoom-in" data-aos-delay="650">Learn More</a>
+  <div class="hero-grid mt-lg-4">
+    <div class="hero-copy" data-aos="fade-right" data-aos-delay="150">
+      <h1 class="h1" data-aos="fade-up">Project <span class="dot">Mura.</span></h1>
+      <p class="lead"data-aos="fade-down" data-aos-delay="1000">VR Emotional Support Platform</p>
+      <div class="hero-actions" data-aos="fade-up" data-aos-delay="1500">
+        <a class="btn" href="#learn">Learn More</a>
+        <a class="btn alt" href="#features">Explore Features</a>
+      </div>
+    </div>
+
+    <div class="hero-media" data-aos="fade-left" data-aos-delay="250">
+      <div class="device">
+        <img src="assets/s1.gif" alt="Mura app preview">
+        <!-- or:
+        <video autoplay muted loop playsinline>
+          <source src="assets/app-hero.mp4" type="video/mp4">
+        </video>
+        -->
+      </div>
+    </div>
   </div>
-
 </section>
-
 
 
 <!-- ===== About Section ===== -->
@@ -469,15 +779,15 @@ body{
       </ul>
     </div>
 
-    <div class="about-media d-block mx-auto" data-aos="fade-left" data-aos-delay="200" style="width:85%;">
-      <img class="" src="assets/about.png" alt="Immersive VR environment preview">
+    <div class="about-media tall-fix" data-aos="fade-left" data-aos-delay="200" style="width:85%;">
+      <img class="" src="assets/logo_bg.png" alt="Immersive VR environment preview">
     </div>
   </div>
 
   <!-- Row 2: image | text -->
   <div class="about-row rev">
-    <div class="about-media" data-aos="fade-right" data-aos-delay="200">
-      <img class="" src="assets/about2.jpg" alt="Emotion-adaptive scene">
+    <div class="about-media d-block mx-auto" data-aos="fade-right" data-aos-delay="200" style="width:85%;">
+      <img class="" src="assets/a2.png" alt="Emotion-adaptive scene">
     </div>
 
     <div class="about-text" data-aos="fade-left" data-aos-delay="100">
@@ -485,7 +795,7 @@ body{
       <h2 class="about-title" data-aos="fade-left" data-aos-delay="200">Why It Matters</h2>
       <p data-aos="fade-left" data-aos-delay="260">
         Designed for schools and wellness programs, Mura supports emotional literacy and private
-        reflection through calm spaces, guided meditations, and an optional companion mode for
+        reflection through calm spaces, guided meditations, and an optional AI companion mode for
         supportive AI dialogue. It respects privacy with local-first sessions and consent-based,
         minimal data export options.
       </p>
@@ -536,7 +846,7 @@ body{
       </div>
     </div>
     <div class="copy" data-aos="fade-right" data-aos-delay="150">
-      <h3 class="feature-title"><span class="num">02</span> Theraphic Mode</h3>
+      <h3 class="feature-title"><span class="num">02</span> Guided Meditation Mode</h3>
       <p class="muted">
         Guided meditation sessions blend soothing narration, soundscapes, and visuals.  
         Each experience adapts to your emotional check-in, helping you find balance and clarity.
@@ -555,7 +865,7 @@ body{
       </div>
     </div>
     <div class="copy" data-aos="fade-left" data-aos-delay="150">
-      <h3 class="feature-title"><span class="num">03</span> Companion Mode</h3>
+      <h3 class="feature-title"><span class="num">03</span> AI Companion Mode</h3>
       <p class="muted">
         A conversational AI companion listens, reflects, and responds with empathy.  
         It offers gentle prompts to explore emotions, fostering understanding without judgment.
@@ -626,7 +936,77 @@ body{
     </div>
   </div>
 </section>
+<!-- ===== In Use: MICA International Scholars ===== -->
+<!-- ===== In Use: MICA International Scholars ===== -->
+<section id="mica" class="section partners">
+  <!-- Global section title (same pattern as other sections) -->
+  <div class="section-head" data-aos="fade-up">
+    <p class="kicker">IN USE</p>
+    <h2 class="section-title">MICA International Scholars</h2>
+  </div>
 
+  <!-- Two-column grid -->
+  <div class="partners-grid">
+    <!-- Left: logo -->
+<div class="logo-col" data-aos="fade-right" data-aos-delay="60">
+  <div class="school-image">
+    <img src="assets/mica.png" alt="MICA International Scholars campus">
+  </div>
+</div>
+
+
+    <!-- Right: text + CTA (subsection lives here only) -->
+    <div class="copy-col" data-aos="fade-left" data-aos-delay="120">
+<p class="section-sub">
+  At <strong>MICA International Scholars</strong>, Mura helps students develop emotional awareness and calm focus through guided VR sessions.  
+  It’s used in wellness and advisory programs to complement traditional counseling and reflection.
+</p>
+<ul class="about-list" style="margin-top:10px">
+  <li>Weekly check-ins for stress and mood awareness</li>
+  <li>Short reflection sessions before classes or exams</li>
+  <li>Improved focus and communication during group work</li>
+  <li>Encourages private, stigma-free emotional expression</li>
+</ul>
+
+      <div class="cta-row">
+        <button class="btn-acc" id="open-demo">Request a Demo</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ===== Demo Request Modal ===== -->
+<dialog id="demoModal" class="modal-card" aria-labelledby="demoTitle">
+  <div class="modal-head" style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+    <h3 class="modal-title" id="demoTitle">Request a Demo</h3>
+    <button class="modal-close" id="close-demo" aria-label="Close">&times;</button>
+  </div>
+  <form class="modal-body demo-form" id="demoForm" method="dialog">
+    <div class="row">
+      <div>
+        <label for="name">Your name</label>
+        <input id="name" name="name" type="text" placeholder="Jane Doe" required>
+      </div>
+      <div>
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" placeholder="you@example.com" required>
+      </div>
+    </div>
+    <label for="org">Organization</label>
+    <input id="org" name="org" type="text" placeholder="School / Program (optional)">
+    <label for="msg">Message</label>
+    <textarea id="msg" name="msg" placeholder="Tell us a bit about your context..."></textarea>
+  </form>
+  <div class="modal-foot">
+    <button class="btn-ghost" id="cancel-demo">Cancel</button>
+    <button class="btn-acc" form="demoForm" id="submit-demo">Send Request</button>
+  </div>
+</dialog>
+
+<!-- Success toast -->
+<div id="demoToast" class="toast">Request <span class="dot">successfully</span> sent.</div>
 
 <!-- ===== Contact ===== -->
 <section id="contact" class="section contact">
@@ -660,6 +1040,205 @@ body{
     once: true,       
     offset: 80          
   });
+</script>
+<script>
+(function(){
+  const canvas = document.getElementById('net-bg');
+  if(!canvas) return;
+
+  const ctx = canvas.getContext('2d', { alpha: true });
+  const DPR = Math.max(1, Math.min(2, window.devicePixelRatio || 1)); // cap for perf
+  let W=0, H=0, points=[], rafId=null, lastT=0;
+
+  const ACC = getComputedStyle(document.documentElement).getPropertyValue('--acc').trim() || '#6c63ff';
+  const ACC2 = '#2dd4ff'; 
+
+  const MAX_DIST = 185;      
+  const SPEED    = 0.035;    
+  const NODE_R   = 1.6;     
+  const GLOW_1   = 0.16;    
+  const GLOW_2   = 0.32;   
+  const CURSOR_BOOST = 110; 
+  const CURSOR_PULL  = 0.035;
+
+  let mx = -9999, my = -9999, hasMouse = false;
+
+  // Resize + reseed with slightly higher density
+  function resize(){
+    const r = canvas.getBoundingClientRect();
+    W = Math.floor(r.width); H = Math.floor(r.height);
+    canvas.width = Math.floor(W * DPR);
+    canvas.height = Math.floor(H * DPR);
+    canvas.style.width = W+'px'; canvas.style.height = H+'px';
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+
+    const target = Math.round((W*H) / 11000); // denser than before
+    const count = Math.max(60, Math.min(140, target));
+    points = Array.from({length: count}, () => ({
+      x: Math.random()*W,
+      y: Math.random()*H,
+      vx: (Math.random()*2-1)*SPEED,
+      vy: (Math.random()*2-1)*SPEED,
+      r: NODE_R + (Math.random()*0.5 - 0.25) // tiny variation
+    }));
+  }
+
+  function lerpColor(a, b, t){
+    const pa = a.replace('#',''), pb = b.replace('#','');
+    const ar = parseInt(pa.substring(0,2),16), ag = parseInt(pa.substring(2,4),16), ab = parseInt(pa.substring(4,6),16);
+    const br = parseInt(pb.substring(0,2),16), bg = parseInt(pb.substring(2,4),16), bb = parseInt(pb.substring(4,6),16);
+    const rr = Math.round(ar + (br-ar)*t), rg = Math.round(ag + (bg-ag)*t), rb = Math.round(ab + (bb-ab)*t);
+    return `rgb(${rr},${rg},${rb})`;
+  }
+
+  function step(ts){
+    const dt = Math.min(32, ts - (lastT||ts)); lastT = ts;
+
+    const t = (ts*0.00015) % 1; // slow phase
+    const col = lerpColor(ACC, ACC2, (Math.sin(ts*0.0004)*0.5+0.5)*0.35); // shift 0..0.35
+    ctx.clearRect(0,0,W,H);
+    const bgGrad = ctx.createRadialGradient(W*0.5, H*0.35, 0, W*0.5, H*0.35, Math.hypot(W,H)*0.6);
+    bgGrad.addColorStop(0, col.replace('rgb','rgba').replace(')',',0.06)'));
+    bgGrad.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = bgGrad;
+    ctx.fillRect(0,0,W,H);
+
+    // Motion (+ gentle cursor pull)
+    for (const p of points){
+      if (hasMouse){
+        const dx = mx - p.x, dy = my - p.y, d = Math.hypot(dx,dy) || 1;
+        const pull = Math.min(1, (CURSOR_PULL * dt) / d);
+        p.vx += dx * pull * 0.0006;
+        p.vy += dy * pull * 0.0006;
+      }
+
+      p.x += p.vx * dt; p.y += p.vy * dt;
+
+      // wrap softly
+      if (p.x < -20) p.x = W+20; else if (p.x > W+20) p.x = -20;
+      if (p.y < -20) p.y = H+20; else if (p.y > H+20) p.y = -20;
+
+      // slight velocity damping to avoid drift explosion
+      p.vx *= 0.999; p.vy *= 0.999;
+    }
+
+
+    const localBoost = hasMouse ? CURSOR_BOOST : 0;
+
+    // two passes for glow + core
+    function drawLink(a, b, alphaScale, lw){
+      ctx.lineWidth = lw;
+      ctx.strokeStyle = col.replace('rgb','rgba').replace(')',',' + alphaScale + ')');
+      ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+    }
+
+    for (let i=0;i<points.length;i++){
+      for (let j=i+1;j<points.length;j++){
+        const a = points[i], b = points[j];
+        const dx=a.x-b.x, dy=a.y-b.y;
+        const d = Math.hypot(dx,dy);
+
+        let dMax = MAX_DIST;
+        if (hasMouse){
+          const dmx = Math.min(Math.hypot(a.x-mx, a.y-my), Math.hypot(b.x-mx, b.y-my));
+          if (dmx < 220) dMax += (1 - dmx/220) * localBoost;
+        }
+
+        if (d < dMax){
+          const w = 1 - d/dMax; // 0..1
+          // soft glow
+          drawLink(a,b, GLOW_1 * w, 2);
+          // crisp core
+          drawLink(a,b, GLOW_2 * (w*0.9+0.1), 1);
+        }
+      }
+    }
+
+    // Nodes with subtle glow
+    ctx.shadowBlur = 8;
+    ctx.shadowColor = col;
+    ctx.fillStyle = col.replace('rgb','rgba').replace(')',',0.65)');
+    for (const p of points){
+      const pulse = 0.2 * Math.sin((p.x+p.y+ts*0.004)*0.6); // very gentle flicker
+      ctx.beginPath(); ctx.arc(p.x, p.y, Math.max(1, p.r + pulse), 0, Math.PI*2); ctx.fill();
+    }
+    ctx.shadowBlur = 0;
+
+    rafId = requestAnimationFrame(step);
+  }
+
+  // Mouse interaction
+  canvas.addEventListener('pointermove', (e)=>{
+    const r = canvas.getBoundingClientRect();
+    mx = e.clientX - r.left; my = e.clientY - r.top; hasMouse = true;
+  }, { passive:true });
+  canvas.addEventListener('pointerleave', ()=>{ hasMouse=false; mx=my=-9999; }, { passive:true });
+
+  // Pause when tab hidden
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden && rafId) { cancelAnimationFrame(rafId); rafId=null; }
+    else if (!document.hidden && !rafId) { lastT=0; rafId=requestAnimationFrame(step); }
+  });
+
+  // Resize handling
+  const ro = new ResizeObserver(resize);
+  ro.observe(canvas.parentElement || canvas);
+  window.addEventListener('orientationchange', resize, {passive:true});
+
+  // Respect reduced motion
+  const prefersReduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduce){
+    canvas.style.display = 'none';
+    return;
+  }
+
+  // Start
+  resize();
+  rafId = requestAnimationFrame(step);
+})();
+</script>
+
+<script>
+  (function(){
+    const modal = document.getElementById('demoModal');
+    const toast = document.getElementById('demoToast');
+    const openBtn = document.getElementById('open-demo');
+    const closeBtn = document.getElementById('close-demo');
+    const cancelBtn = document.getElementById('cancel-demo');
+    const form = document.getElementById('demoForm');
+    const submitBtn = document.getElementById('submit-demo');
+
+    if(!modal || !openBtn) return;
+
+    function showToast(msg){
+      if (toast){ 
+        if (msg) toast.innerHTML = msg;
+        toast.style.display = 'block';
+        setTimeout(()=> toast.style.display = 'none', 2200);
+      }
+    }
+
+    openBtn.addEventListener('click', () => modal.showModal());
+    closeBtn?.addEventListener('click', () => modal.close());
+    cancelBtn?.addEventListener('click', () => modal.close());
+
+    submitBtn?.addEventListener('click', (e) => {
+      if (form && !form.reportValidity()){
+        e.preventDefault();
+        return;
+      }
+      setTimeout(() => showToast('Request <span class="dot">successfully</span> sent.'), 50);
+    });
+
+    modal.addEventListener('click', (ev) => {
+      const rect = modal.getBoundingClientRect();
+      const inDialog = (
+        ev.clientX >= rect.left && ev.clientX <= rect.right &&
+        ev.clientY >= rect.top && ev.clientY <= rect.bottom
+      );
+      if (!inDialog) modal.close();
+    });
+  })();
 </script>
 
 </body>
