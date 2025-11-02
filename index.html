@@ -740,7 +740,15 @@ dialog::backdrop{background:rgba(10,12,20,.55);backdrop-filter:blur(3px)}
     margin-inline: auto;
   }
 }
-
+.workflow-grid{
+  display:grid;
+  gap:1.5rem;
+  grid-template-columns: 1fr;              
+}
+@media (min-width: 768px){
+  .workflow-grid{ grid-template-columns: repeat(2, 1fr); }  
+}
+.workflow-grid .card-tile{ min-height: 420px; }
 </style>
 </head>
 <body>
@@ -763,7 +771,7 @@ dialog::backdrop{background:rgba(10,12,20,.55);backdrop-filter:blur(3px)}
       <h1 class="h1" data-aos="fade-up">Project <span class="dot">Mura</span></h1>
       <p class="lead"data-aos="fade-down" data-aos-delay="1000">VR Emotional Support Platform</p>
       <div class="hero-actions" data-aos="fade-up" data-aos-delay="1500">
-        <a class="btn" href="#learn">Learn More</a>
+        <a class="btn" href="#about">Learn More</a>
         <a class="btn alt" href="#features">Explore Features</a>
       </div>
     </div>
